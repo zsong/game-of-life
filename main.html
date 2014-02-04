@@ -1,0 +1,115 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+	<script type="text/javascript" src="src/Game.js"></script>
+	
+	<script type="text/javascript">
+		function paint(config){
+			$("#board").empty();
+			for(i = 0; i < config.h; i ++){
+				for(j = 0; j < config.w; j ++){
+					if(config.board[i][j] == 1 ){
+						$("#board").append("<div class='black left'>&nbsp;&nbsp;</div>");
+					}else{
+						$("#board").append("<div class='white left'>&nbsp;&nbsp;</div>");
+					}
+				}
+				$("#board").append("<div style='clear:both;'></div>");
+			}
+		}
+
+		function paint_canvas(config){
+			cellSize = 10;
+			var canvas = document.getElementById('container');
+		    if (canvas.getContext) {
+		      	var context = canvas.getContext('2d');
+
+		      	for(row = 0; row < config.h; row++){
+					for(col = 0; col < config.w; col++){
+						if(config.board[row][col] == 1 ){
+							context.fillStyle = "rgb(0,255,0)";
+		      				context.fillRect (col*cellSize, row*cellSize, cellSize, cellSize);
+						}else{
+							context.fillStyle = "rgb(245,245,245)";
+		      				context.fillRect (col*cellSize, row*cellSize, cellSize, cellSize);
+						}
+					}
+				}
+			} 
+		}
+
+		$(document).ready(function(){
+			var i=0,
+				j=0;
+
+			var config = {
+	            w : 100,
+	            h : 100,
+	            board : [
+	            ]
+	        };
+
+	        //init
+	        for(i = 0; i < config.h; i ++){
+	        	var configRow = []
+				for(j = 0; j < config.w; j ++){
+					configRow.push(0);
+				}
+				config.board.push(configRow);
+			}
+
+
+			config.board[52][55] = 1;
+			config.board[52][56] = 1;
+			config.board[52][57] = 1;
+
+			config.board[49][49] = 1;
+			config.board[50][50] = 1;
+			config.board[50][51] = 1;
+			config.board[51][49] = 1;
+			config.board[51][50] = 1;
+
+			// config.board[47][45] = 1;
+			// config.board[47][47] = 1;
+			// config.board[48][46] = 1;
+			// config.board[49][45] = 1;
+			// config.board[49][47] = 1;
+
+
+			//entree
+			window.setInterval(function() {
+			 	paint_canvas(config);
+			 	config = getNextPeriod(config);
+			}, 200);
+
+		});
+	</script>
+
+	<style type="text/css">
+		.black{
+			height: 10px;
+			width: 10px;
+			background-color: green;
+		}
+
+		.white{
+			height: 10px;
+			width: 10px;
+			background-color: #D3D3D3;
+		}
+
+		.left{
+			float: left;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="board"></div>
+	<canvas id="container" width="1000" height="1000"></canvas>
+</body>
+
+</html>
