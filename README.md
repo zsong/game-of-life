@@ -1,4 +1,4 @@
-Life Game Simulator
+Game of life
 ========
 
 A simple life simulation game with the demonstration of TDD
